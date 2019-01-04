@@ -1,3 +1,6 @@
+clc;
+clear;
+
 N = 21;   % 训练集规模
 cb = zeros(N,1); %存放每张照片的cb均值
 cr = zeros(N,1); %存放每张照片的cr均值

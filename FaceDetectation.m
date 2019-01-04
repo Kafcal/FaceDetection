@@ -1,5 +1,5 @@
 % 样本图片信息提取
-image_num = 2;
+image_num = 7;
 testImageName=strcat('D:\FaceDetection\test\',num2str(image_num),'.jpg');
 test_img = imread(testImageName);
 test_size = size(test_img);
@@ -28,20 +28,30 @@ end
 max_P = max(P(:));
 P = P / max_P;  
 
-%阈值分割
-
+% 阈值分割
 
 %二值化图显示
-show_img = zeros(test_m, test_n);
-BW = zeros(test_m, test_n);
+BW_ = zeros(test_m, test_n);
 for i = 1:test_m
     for j = 1:test_n
         if (P(i,j) >= 0.45)
-            show_img(i,j) = 255;
-            BW(i, j) = 1;
+            BW_(i, j) = 1;
         end
     end
 end
+
+% 开闭操作
+se = strel('square',3);
+BW = imopen(BW_, se);
+BW = imclose(BW, se);
+
+% 填洞操作
+BW = imfill(BW, 'holes');
+
+% 腐蚀和膨胀操作
+sel = strel('square',8);
+BW = imerode(BW, sel);
+BW = imdilate(BW, sel);
 
 % 特征区域提取
 [L, num] = bwlabel(BW, 4);
@@ -53,7 +63,7 @@ for i = 1:num
     row_num = size(r, 1); % 行数
     
     % 排除非脸部区域
-    if (len/wid<0.8) || (len/wid>2.4) || row_num<200 || row_num/area_sq<0.55
+    if (len/wid<0.8) || (len/wid>2.4) || row_num<200 || row_num/area_sq<0.55 || area_sq<640
         for j = 1:row_num
             L(r(j),c(j)) = 0;
         end
@@ -69,17 +79,43 @@ c_min = min(c);
 
 f1 = figure;
 f2 = figure;
+f3 = figure;
 
 figure(f1);
 subplot(2,1,1);
 imshow(testImageName), title('原始图片');
 subplot(2,1,2);
-%imshow(show_img, []), title('二值化图');
 imshow(L), title('二值化图');
 
 % 用矩形圈出人脸
 figure(f2);
 imshow(test_img);
+width = c_max-c_min;
+height = min(r_max-r_min,width*1.5); 
 hold on
-rectangle('Position',[r_min c_min c_max-c_min r_max-r_min],'LineWidth',4,'EdgeColor','r');
+rectangle('Position',[r_min c_min width height],'LineWidth',4,'EdgeColor','r');
+
+
+% 利用颜色分层技术替换人脸标准照的背景
+Red = test_img(1:50,:,1);
+Green = test_img(1:50,:,2);
+Blue = test_img(1:50,:,3);
+a_red = mean(Red(:));
+a_green = mean(Green(:));
+a_blue = mean(Blue(:));
+
+W = 143;
+CBImg = test_img;
+for i = 1:test_m
+    for j = 1:test_n
+        if (abs(double(test_img(i,j,1))-a_red)<W/2) && (abs(double(test_img(i,j,2))-a_green)<W/2) && (abs(double(test_img(i,j,3))-a_blue)<W/2)
+            CBImg(i,j,1) = 220;
+            CBImg(i,j,2) = 20;
+            CBImg(i,j,3) = 60;
+        end
+    end
+end
+
+figure(f3);
+imshow(CBImg);
 
