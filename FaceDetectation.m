@@ -1,5 +1,5 @@
 % 样本图片信息提取
-image_num = 7;
+image_num = 1;
 testImageName=strcat('D:\FaceDetection\test\',num2str(image_num),'.jpg');
 test_img = imread(testImageName);
 test_size = size(test_img);
@@ -12,6 +12,10 @@ test_cr = test_cbcr(:,:,3);
 % 中值滤波(5*5)
 filter_cb = medianFiltering(test_cb);
 filter_cr = medianFiltering(test_cr);
+
+filter_r = medianFiltering(test_img(:,:,1));
+filter_g = medianFiltering(test_img(:,:,2));
+filter_b = medianFiltering(test_img(:,:,3));
 
 % 相似度计算
 M = [mean_cb mean_cr]';  %为肤色在YCbCr颜色空间的样本均值
@@ -91,7 +95,7 @@ imshow(L), title('二值化图');
 figure(f2);
 imshow(test_img);
 width = c_max-c_min;
-height = min(r_max-r_min,width*1.5); 
+height = min(r_max-r_min,width*1.4); 
 hold on
 rectangle('Position',[r_min c_min width height],'LineWidth',4,'EdgeColor','r');
 
@@ -106,9 +110,14 @@ a_blue = mean(Blue(:));
 
 W = 143;
 CBImg = test_img;
+CBImg(:,:,1) = filter_r;
+CBImg(:,:,2) = filter_g;
+CBImg(:,:,3) = filter_b;
 for i = 1:test_m
     for j = 1:test_n
-        if (abs(double(test_img(i,j,1))-a_red)<W/2) && (abs(double(test_img(i,j,2))-a_green)<W/2) && (abs(double(test_img(i,j,3))-a_blue)<W/2)
+        is_skin = P(i,j) >= 0.40;
+        is_background = (abs(double(filter_r(i,j))-a_red)<W/2) && (abs(double(filter_g(i,j))-a_green)<W/2) && (abs(double(filter_b(i,j))-a_blue)<W/2);
+        if is_background && ~is_skin
             CBImg(i,j,1) = 220;
             CBImg(i,j,2) = 20;
             CBImg(i,j,3) = 60;

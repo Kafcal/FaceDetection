@@ -1,7 +1,7 @@
 clc;
 clear;
 
-N = 21;   % 训练集规模
+N = 30;   % 训练集规模
 cb = zeros(N,1); %存放每张照片的cb均值
 cr = zeros(N,1); %存放每张照片的cr均值
 C_ = zeros(2,2,N); %存放每张照片的协方差矩阵
@@ -31,9 +31,10 @@ disp(str_cb);
 str_cr = ['the value of mean_cr is ' num2str(mean_cr)];
 disp(str_cr);
 
+
 % 协方差太小，应该把整个脸部都作为训练集
 C = mean(C_, 3) * 10;
-% C = cov(cb, cr);
+%C = cov(cb, cr);
 disp(C);
 
 

@@ -1,10 +1,13 @@
-n = 21;   % 训练集规模
-cb = zeros(n,1); %存放每张照片的cb均值
-cr = zeros(n,1); %存放每张照片的cr均值
-C_ = zeros(2,2,n); %存放每张照片的协方差矩阵
+clc;
+clear;
+
+N = 30;   % 训练集规模
+cb = zeros(N,1); %存放每张照片的cb均值
+cr = zeros(N,1); %存放每张照片的cr均值
+C_ = zeros(2,2,N); %存放每张照片的协方差矩阵
 
 % 提取训练集图像特征
-for i=1:n
+for i=1:N
     imageName=strcat('D:\FaceDetection\skin\',num2str(i),'.jpg');
     I = imread(imageName);
     si=size(I);
@@ -12,8 +15,8 @@ for i=1:n
     n=si(2);
     img=rgb2ycbcr(I);
 
-    temp_cb = mimg(:,:,2);
-    temp_cr = img(:,:,3);
+    temp_cb = medianFiltering(img(:,:,2));
+    temp_cr = medianFiltering(img(:,:,3));
     
     cb(i,1) = mean(temp_cb(:));
     cr(i,1) = mean(temp_cr(:));
@@ -28,9 +31,10 @@ disp(str_cb);
 str_cr = ['the value of mean_cr is ' num2str(mean_cr)];
 disp(str_cr);
 
+
 % 协方差太小，应该把整个脸部都作为训练集
-C = mean(C_, 3);
-% C = cov(cb, cr);
+%C = mean(C_, 3) * 10;
+%C = cov(cb, cr);
 disp(C);
 
 
