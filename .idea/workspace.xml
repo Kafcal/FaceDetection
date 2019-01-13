@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="20751d70-886c-43a5-812e-218fac8a38ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/FeatureExtraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FaceDetectation.asv" beforeDir="false" afterPath="$PROJECT_DIR$/FaceDetectation.asv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FaceDetectation.m" beforeDir="false" afterPath="$PROJECT_DIR$/FaceDetectation.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FeatureExtraction.asv" beforeDir="false" afterPath="$PROJECT_DIR$/FeatureExtraction.asv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FeatureExtraction.m" beforeDir="false" afterPath="$PROJECT_DIR$/FeatureExtraction.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.m" beforeDir="false" afterPath="$PROJECT_DIR$/test.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/test/5.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FaceDetectation.asv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FeatureExtraction.asv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.asv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +54,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="15" />
     <option name="y" value="30" />
     <option name="width" value="1890" />
@@ -152,8 +148,7 @@
     <option name="totallyTimeSpent" value="3730000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24333064" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

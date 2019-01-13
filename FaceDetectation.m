@@ -1,5 +1,5 @@
 % 样本图片信息提取
-image_num = 1;
+image_num = 8;
 testImageName=strcat('D:\FaceDetection\test\',num2str(image_num),'.jpg');
 test_img = imread(testImageName);
 test_size = size(test_img);
