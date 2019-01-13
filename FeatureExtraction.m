@@ -8,7 +8,8 @@ C_ = zeros(2,2,N); %存放每张照片的协方差矩阵
 
 % 提取训练集图像特征
 for i=1:N
-    imageName=strcat('D:\FaceDetection\skin\',num2str(i),'.jpg');
+    %imageName=strcat('D:\FaceDetection\skin\',num2str(i),'.jpg');
+    imageName=strcat('./skin/',num2str(i),'.jpg');
     I = imread(imageName);
     si=size(I);
     m=si(1);
