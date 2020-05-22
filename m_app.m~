@@ -345,12 +345,12 @@ for i = 1:test_m
     end
 end
 
-g1=medfilt2(CBImg(:,:,1));%%红
-g2=medfilt2(CBImg(:,:,2));%%绿
-g3=medfilt2(CBImg(:,:,3));%%蓝
-CBImg(:,:,1) = g1;
-CBImg(:,:,2) = g2;
-CBImg(:,:,3) = g3;
+g1=medfilt2(img(:,:,1));%%红
+g2=medfilt2(img(:,:,2));%%绿
+g3=medfilt2(img(:,:,3));%%蓝
+img1(:,:,1) = g1;
+img1(:,:,2) = g2;
+img1(:,:,3) = g3;
 setappdata(handles.m_figure,'CBImg',CBImg);
 axes(handles.axes_bg);%用axes命令设定当前操作的坐标轴是axes_detection
 imshow(CBImg);

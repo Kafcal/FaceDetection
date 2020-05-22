@@ -1,4 +1,4 @@
-% ÖĞÖµÂË²¨Æ÷(5*5)
+% ä¸­å€¼æ»¤æ³¢å™¨(5*5)
 function y = medianFiltering(A)
 sizeA = size(A);
 mA = sizeA(1);
@@ -6,9 +6,9 @@ nA = sizeA(2);
 y = A;
 for i=3:mA-2
     for j=3:nA-2
-        temp_5x5 = A(i-2:i+2,j-2:j+2);%ÌáÈ¡5x5ÇøÓò
-        temp = sort(temp_5x5); %ÅÅĞò
-        y(i,j) = temp(13);%ÖĞÖµ
+        temp_5x5 = A(i-2:i+2,j-2:j+2);%æå–5x5åŒºåŸŸ
+        temp = sort(temp_5x5); %æ’åº
+        y(i,j) = temp(13);%ä¸­å€¼
     end
 end
 end

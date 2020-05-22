@@ -1,6 +1,6 @@
-% Ñù±¾Í¼Æ¬ĞÅÏ¢ÌáÈ¡
-image_num = 8;
-testImageName=strcat('D:\FaceDetection\test\',num2str(image_num),'.jpg');
+% æ ·æœ¬å›¾ç‰‡ä¿¡æ¯æå–
+image_num = 4;
+testImageName=strcat('./test/',num2str(image_num),'.jpg');
 test_img = imread(testImageName);
 test_size = size(test_img);
 test_m = test_size(1);
@@ -9,7 +9,7 @@ test_cbcr = rgb2ycbcr(test_img);
 test_cb = test_cbcr(:,:,2);
 test_cr = test_cbcr(:,:,3);
 
-% ÖĞÖµÂË²¨(5*5)
+% ä¸­å€¼æ»¤æ³¢(5*5)
 filter_cb = medianFiltering(test_cb);
 filter_cr = medianFiltering(test_cr);
 
@@ -17,9 +17,9 @@ filter_r = medianFiltering(test_img(:,:,1));
 filter_g = medianFiltering(test_img(:,:,2));
 filter_b = medianFiltering(test_img(:,:,3));
 
-% ÏàËÆ¶È¼ÆËã
-M = [mean_cb mean_cr]';  %Îª·ôÉ«ÔÚYCbCrÑÕÉ«¿Õ¼äµÄÑù±¾¾ùÖµ
-P = zeros(test_m, test_n);  %ÏàËÆ¶È¾ØÕó
+% ç›¸ä¼¼åº¦è®¡ç®—
+M = [mean_cb mean_cr]';  %ä¸ºè‚¤è‰²åœ¨YCbCré¢œè‰²ç©ºé—´çš„æ ·æœ¬å‡å€¼
+P = zeros(test_m, test_n);  %ç›¸ä¼¼åº¦çŸ©é˜µ
 for i = 1:test_m
     for j = 1:test_n
         x = double([filter_cb(i,j), filter_cr(i,j)]');
@@ -28,13 +28,13 @@ for i = 1:test_m
     end
 end
 
-%¹éÒ»»¯
+%å½’ä¸€åŒ–
 max_P = max(P(:));
 P = P / max_P;  
 
-% ãĞÖµ·Ö¸î
+% é˜ˆå€¼åˆ†å‰²
 
-%¶şÖµ»¯Í¼ÏÔÊ¾
+%äºŒå€¼åŒ–å›¾æ˜¾ç¤º
 BW_ = zeros(test_m, test_n);
 for i = 1:test_m
     for j = 1:test_n
@@ -44,29 +44,29 @@ for i = 1:test_m
     end
 end
 
-% ¿ª±Õ²Ù×÷
+% å¼€é—­æ“ä½œ
 se = strel('square',3);
 BW = imopen(BW_, se);
 BW = imclose(BW, se);
 
-% Ìî¶´²Ù×÷
+% å¡«æ´æ“ä½œ
 BW = imfill(BW, 'holes');
 
-% ¸¯Ê´ºÍÅòÕÍ²Ù×÷
+% è…èš€å’Œè†¨èƒ€æ“ä½œ
 sel = strel('square',8);
 BW = imerode(BW, sel);
 BW = imdilate(BW, sel);
 
-% ÌØÕ÷ÇøÓòÌáÈ¡
+% ç‰¹å¾åŒºåŸŸæå–
 [L, num] = bwlabel(BW, 4);
 for i = 1:num
-    [r,c] = find(L==i); % ±ê¼ÇÎªiµÄ¶ÔÏóµÄĞĞºÍÁĞ×ø±ê¡£
+    [r,c] = find(L==i); % æ ‡è®°ä¸ºiçš„å¯¹è±¡çš„è¡Œå’Œåˆ—åæ ‡ã€‚
     len = max(r) - min(r) + 1;
     wid = max(c) - min(c) + 1;
-    area_sq = len * wid;  % Ãæ»ı
-    row_num = size(r, 1); % ĞĞÊı
+    area_sq = len * wid;  % é¢ç§¯
+    row_num = size(r, 1); % è¡Œæ•°
     
-    % ÅÅ³ı·ÇÁ³²¿ÇøÓò
+    % æ’é™¤éè„¸éƒ¨åŒºåŸŸ
     if (len/wid<0.8) || (len/wid>2.4) || row_num<200 || row_num/area_sq<0.55 || area_sq<640
         for j = 1:row_num
             L(r(j),c(j)) = 0;
@@ -87,11 +87,11 @@ f3 = figure;
 
 figure(f1);
 subplot(2,1,1);
-imshow(testImageName), title('Ô­Ê¼Í¼Æ¬');
+imshow(testImageName), title('åŸå§‹å›¾ç‰‡');
 subplot(2,1,2);
-imshow(L), title('¶şÖµ»¯Í¼');
+imshow(L), title('äºŒå€¼åŒ–å›¾');
 
-% ÓÃ¾ØĞÎÈ¦³öÈËÁ³
+% ç”¨çŸ©å½¢åœˆå‡ºäººè„¸
 figure(f2);
 imshow(test_img);
 width = c_max-c_min;
@@ -100,7 +100,7 @@ hold on
 rectangle('Position',[r_min c_min width height],'LineWidth',4,'EdgeColor','r');
 
 
-% ÀûÓÃÑÕÉ«·Ö²ã¼¼ÊõÌæ»»ÈËÁ³±ê×¼ÕÕµÄ±³¾°
+% åˆ©ç”¨é¢œè‰²åˆ†å±‚æŠ€æœ¯æ›¿æ¢äººè„¸æ ‡å‡†ç…§çš„èƒŒæ™¯
 Red = test_img(1:50,:,1);
 Green = test_img(1:50,:,2);
 Blue = test_img(1:50,:,3);
@@ -127,4 +127,3 @@ end
 
 figure(f3);
 imshow(CBImg);
-

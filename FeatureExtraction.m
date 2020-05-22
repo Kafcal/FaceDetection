@@ -1,12 +1,12 @@
 clc;
 clear;
 
-N = 30;   % ÑµÁ·¼¯¹æÄ£
-cb = zeros(N,1); %´æ·ÅÃ¿ÕÅÕÕÆ¬µÄcb¾ùÖµ
-cr = zeros(N,1); %´æ·ÅÃ¿ÕÅÕÕÆ¬µÄcr¾ùÖµ
-C_ = zeros(2,2,N); %´æ·ÅÃ¿ÕÅÕÕÆ¬µÄĞ­·½²î¾ØÕó
+N = 30;   % è®­ç»ƒé›†è§„æ¨¡
+cb = zeros(N,1); %å­˜æ”¾æ¯å¼ ç…§ç‰‡çš„cbå‡å€¼
+cr = zeros(N,1); %å­˜æ”¾æ¯å¼ ç…§ç‰‡çš„crå‡å€¼
+C_ = zeros(2,2,N); %å­˜æ”¾æ¯å¼ ç…§ç‰‡çš„åæ–¹å·®çŸ©é˜µ
 
-% ÌáÈ¡ÑµÁ·¼¯Í¼ÏñÌØÕ÷
+% æå–è®­ç»ƒé›†å›¾åƒç‰¹å¾
 for i=1:N
     imageName=strcat('./skin/',num2str(i),'.jpg');
     I = imread(imageName);
@@ -32,21 +32,7 @@ str_cr = ['the value of mean_cr is ' num2str(mean_cr)];
 disp(str_cr);
 
 
-% Ğ­·½²î
+% åæ–¹å·®
 C = mean(C_, 3) * 10;
 %C = cov(cb, cr);
 disp(C);
-
-
-
-
-
-
-
-        
-        
-
-
-
-
-
